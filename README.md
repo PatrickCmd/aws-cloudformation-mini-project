@@ -106,6 +106,8 @@ The directory `bin/cfn` contains bash scripts to automate the deployment and cle
   
 ![VPC EC2](images/vpc_ec2.drawio.png)
 
+The steps below explain the sections of the vpc network to be provisioned. For full template see reference [**here**](cloudformation-practice/aws/cfn/network/template.yaml)
+
 1. **Create vpc**
 
 ```yaml
@@ -497,6 +499,8 @@ This bash script is used to deploy an AWS CloudFormation template using the AWS 
 Overall, this script deploys a CloudFormation stack based on a template, using configuration settings stored in a TOML file. It performs linting on the template before deploying to catch potential issues early in the process.
 
 ## EC2 Instance (Ubuntu Server)
+
+See full template [**here**](cloudformation-practice/aws/cfn/ec2/template.yaml)
 
 8. **Create a network interface with an ip in the subnet that was created in step 4**
 9. **Assign an elastic IP to the network interface created in step 6**
