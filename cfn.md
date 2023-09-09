@@ -1,0 +1,1 @@
+![AWS CFN](images/aws_cfn.png)
