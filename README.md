@@ -49,6 +49,28 @@ Extracting environment variables and parsing parameter configurations using [TOM
 
 See the configs for [**Newtork**]() and [**EC2**]() using toml.
 
+### Folder structure
+
+```
+├── cloudformation-practice
+│   ├── aws
+│   │   └── cfn
+│   │       ├── ec2
+│   │       │   ├── config.toml
+│   │       │   └── template.yaml
+│   │       └── network
+│   │           ├── config.toml
+│   │           └── template.yaml
+│   └── bin
+│       └── cfn
+│           ├── ec2-deploy
+│           └── network-deploy
+```
+
+The directories in `aws/cfn` contain the cloudformation templates and configurations for the network and ec2 instance to be provisioned
+
+The directory `bin/cfn` contains bash scripts to automate the deployment and cleanup of the network and ec2 templates.
+
 
 ## AWS CloudFormation Networking
 - VPC
