@@ -276,7 +276,7 @@ This association ensures that the subnet (`SubnetPub1`) uses the specified route
 
 In summary, this part of the template associates the public subnet (`SubnetPub1`) with the route table (`RouteTable`), enabling the subnet to use the appropriate routing configuration for internet connectivity.
 
-6. **Create Security Group**
+7. **Create Security Group**
 
 ```yaml
 SecurityGroup:
@@ -402,3 +402,91 @@ The "Outputs" section of the AWS CloudFormation template defines various outputs
 These outputs make it convenient to reference and use essential information about the resources created in this CloudFormation stack in other stacks or for external purposes, such as configuring other AWS resources or services.
 
 ## EC2 Instance (Ubuntu Server)
+
+8. **Create a network interface with an ip in the subnet that was created in step 4**
+9. **Assign an elastic IP to the network interface created in step 6**
+10. **Create Ubuntu server (EC2 instance) and install/enable apache2**
+
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: |
+  The ec2 instance configuration
+
+Parameters:
+  NetworkStack:
+    Type: String
+    Description: This is our base layer of networking components eg. VPC, Subnets
+    Default: TestUbuntuNet
+
+Resources:
+  WebServerInstance:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html#aws-properties-ec2-instance--examples
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: "ami-053b0d53c279acc90"
+      InstanceType: "t2.micro"
+      KeyName: "terraform-demo"
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - Fn::ImportValue: !Sub ${NetworkStack}SecurityGroupId
+          SubnetId: 
+            Fn::Select:
+              - 0  # Index 0 to get the first subnet
+              - Fn::Split:
+                - ","
+                - Fn::ImportValue: !Sub "${NetworkStack}PublicSubnetIds"
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          sudo apt update -y
+          sudo apt install apache2 -y
+          sudo systemctl start apache2
+          sudo bash -c 'echo "Cloudformation first web server" > /var/www/html/index.html'
+      Tags:
+        - Key: Name
+          Value: "test-ubuntu-ec2-instance"
+
+Outputs:
+  ServerPublicIP:
+    Description: "Public IP of the EC2 instance"
+    Value: !GetAtt WebServerInstance.PublicIp
+
+  ServerPrivateIP:
+    Description: "Private IP of the EC2 instance"
+    Value: !GetAtt WebServerInstance.PrivateIp
+
+  ServerInstanceID:
+    Description: "Instance ID of the EC2 instance"
+    Value: !Ref WebServerInstance
+```
+
+This section of the AWS CloudFormation template defines an AWS EC2 instance resource named `WebServerInstance`. This EC2 instance is configured to run a web server (Apache) and set up some basic configurations. Additionally, the template defines several outputs to provide information about the EC2 instance. Let's break down this part of the template:
+
+1. **WebServerInstance**:
+   - This section defines an AWS resource named `WebServerInstance`, which represents an EC2 instance.
+   - **Type**: Specifies the resource type as `AWS::EC2::Instance`.
+
+   - **Properties**:
+     - **ImageId**: Specifies the Amazon Machine Image (AMI) to use for the instance. In this case, it uses a specific AMI ID ("ami-053b0d53c279acc90").
+     - **InstanceType**: Specifies the instance type as "t2.micro," which is a low-cost, general-purpose instance type.
+     - **KeyName**: Specifies the key pair to associate with the instance for SSH access.
+     - **NetworkInterfaces**: Defines the network interface configuration for the instance.
+       - **AssociatePublicIpAddress**: Sets to "true," indicating that the instance should be assigned a public IP address.
+       - **DeviceIndex**: Specifies the device index as "0" for the network interface.
+       - **GroupSet**: Associates a security group with the instance. It imports the security group ID from another stack using `Fn::ImportValue`.
+       - **SubnetId**: Specifies the subnet in which the instance will be launched. It selects the first public subnet ID from a comma-delimited list of public subnet IDs imported from another stack.
+
+     - **UserData**: Contains a script that will be executed when the instance is launched. This script updates the package repository, installs Apache, starts the Apache service, and creates a simple "index.html" file.
+
+     - **Tags**: Attaches a tag to the instance with the key "Name" and a value of "test-ubuntu-ec2-instance" for easy identification.
+
+2. **Outputs**:
+   - This section defines several outputs to provide information about the EC2 instance.
+   - **ServerPublicIP**: Provides the public IP address of the EC2 instance using the `!GetAtt` function.
+   - **ServerPrivateIP**: Provides the private IP address of the EC2 instance using the `!GetAtt` function.
+   - **ServerInstanceID**: Provides the instance ID of the EC2 instance using the `!Ref` function.
+
+These outputs are helpful for obtaining information about the launched EC2 instance, such as its public and private IP addresses and instance ID. This information can be used for further configuration or for accessing the instance after it has been created.
