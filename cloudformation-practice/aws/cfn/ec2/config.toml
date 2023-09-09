@@ -1,0 +1,7 @@
+[deploy]
+bucket = 'cfn-artifacts-cohort6-1001'
+region = 'us-east-1'
+stack_name = 'TestUbuntuEc2Instance'
+
+[parameters]
+NetworkStack = 'TestUbuntuNet'

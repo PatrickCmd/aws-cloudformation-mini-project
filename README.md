@@ -4,7 +4,7 @@ A mini project to learn about AWS Cloudformation. Launch a VPC and an EC2 instan
 ## Additional Resources
 1. [**AWS CloudFormation Documentation**](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 2. [**AWS CloudFormation Template reference**](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-reference.html**)
-3. [**AWS CLI Cloudformation Reference**](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/)
+3. [**AWS CLI Cloudformation Reference - V2**](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/index.html)
 4. [**Medium Blog- By Josh Hargett**](https://awstip.com/week-10-11-aws-cloud-bootcamp-558de5b3fed7)
 
 ## Terminologies
@@ -60,5 +60,7 @@ See the configs for [**Newtork**]() and [**EC2**]() using toml.
     - HTTP 80
     - HTTPS 443
     - SSH 22
+  
+![VPC EC2](images/vpc_ec2.drawio.png)
 
 ## EC2 Instance (Ubuntu Server)
