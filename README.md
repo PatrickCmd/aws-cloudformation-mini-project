@@ -403,6 +403,8 @@ These outputs make it convenient to reference and use essential information abou
 
 #### Deploy network stack
 Make sure you are in the `cloudformation-practice` directory when running the commands below
+
+And before deploying change the path `/home/ec2-user/environment/` in the [**scripts**](cloudformation-practice/bin/cfn/) to the correct path depending on your environment.
 ```sh
 ./bin/cfn/network-deploy
 ```
