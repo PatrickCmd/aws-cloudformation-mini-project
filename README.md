@@ -47,7 +47,7 @@ gem install cfn-toml
 
 Extracting environment variables and parsing parameter configurations using [TOML](https://www.w3schools.io/file/toml-introduction/) for cloudformation templates.
 
-See the configs for [**Newtork**]() and [**EC2**]() using toml.
+See the configs for [**Newtork**](cloudformation-practice/aws/cfn/network/config.toml) and [**EC2**](cloudformation-practice/aws/cfn/ec2/config.toml) using toml.
 
 ### Folder structure
 
