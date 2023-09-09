@@ -5,7 +5,7 @@ A mini project to learn about AWS Cloudformation. Launch a VPC and an EC2 instan
 1. [**AWS CloudFormation Documentation**](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 2. [**AWS CloudFormation Template reference**](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-reference.html**)
 3. [**AWS CLI Cloudformation Reference**](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/)
-4. [**Medium Blog- By Josh Hargett](https://awstip.com/week-10-11-aws-cloud-bootcamp-558de5b3fed7)
+4. [**Medium Blog- By Josh Hargett**](https://awstip.com/week-10-11-aws-cloud-bootcamp-558de5b3fed7)
 
 ## Terminologies
 
