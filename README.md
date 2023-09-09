@@ -401,6 +401,78 @@ The "Outputs" section of the AWS CloudFormation template defines various outputs
 
 These outputs make it convenient to reference and use essential information about the resources created in this CloudFormation stack in other stacks or for external purposes, such as configuring other AWS resources or services.
 
+#### Deploy network stack
+Make sure you are in the `cloudformation-practice` directory when running the commands below
+```sh
+./bin/cfn/network-deploy
+```
+
+**Summary of the script**
+
+```bash
+#! /usr/bin/env bash
+set -e # stop the execution of the script if it fails
+
+CFN_PATH="/home/ec2-user/environment/aws/cfn/network/template.yaml"
+CONFIG_PATH="/home/ec2-user/environment/aws/cfn/network/config.toml"
+echo $CFN_PATH
+
+cfn-lint $CFN_PATH
+
+BUCKET=$(cfn-toml key deploy.bucket -t $CONFIG_PATH)
+REGION=$(cfn-toml key deploy.region -t $CONFIG_PATH)
+STACK_NAME=$(cfn-toml key deploy.stack_name -t $CONFIG_PATH)
+
+aws cloudformation deploy \
+  --stack-name $STACK_NAME \
+  --s3-bucket $BUCKET \
+  --s3-prefix networking \
+  --region $REGION \
+  --template-file "$CFN_PATH" \
+  --no-execute-changeset \
+  --tags group=test-ubuntu-networking \
+  --capabilities CAPABILITY_NAMED_IAM
+```
+
+This bash script is used to deploy an AWS CloudFormation template using the AWS Command Line Interface (CLI). It follows best practices by setting some error handling and using parameterized configuration. Let's break down the script step by step:
+
+- `set -e`:
+   - This command sets the `-e` option for the script, which means that the script will immediately exit if any command returns a non-zero exit status, indicating an error. This is a good practice for ensuring that the script stops execution if something goes wrong.
+
+- `CFN_PATH="/home/ec2-user/environment/aws/cfn/network/template.yaml"`:
+   - This line sets the `CFN_PATH` variable to the path of the AWS CloudFormation template file. It assumes that the template is located at the specified path.
+
+- `CONFIG_PATH="/home/ec2-user/environment/aws/cfn/network/config.toml"`:
+   - This line sets the `CONFIG_PATH` variable to the path of a TOML configuration file that appears to contain settings for the CloudFormation deployment.
+
+- `echo $CFN_PATH`:
+   - This line simply echoes the `CFN_PATH` variable to the console for informational purposes.
+
+- `cfn-lint $CFN_PATH`:
+   - This line uses the `cfn-lint` command-line tool to perform linting or static analysis of the CloudFormation template at the specified path. It checks for potential issues or errors in the template's syntax and structure.
+
+- `BUCKET=$(cfn-toml key deploy.bucket -t $CONFIG_PATH)`:
+   - This line extracts the value of the `deploy.bucket` key from the TOML configuration file specified by `$CONFIG_PATH` using the `cfn-toml` command-line tool. It assigns the extracted value to the `BUCKET` variable. This is likely the name of an S3 bucket where CloudFormation artifacts will be stored.
+
+- `REGION=$(cfn-toml key deploy.region -t $CONFIG_PATH)`:
+   - Similar to the previous line, this line extracts the value of the `deploy.region` key from the TOML configuration file and assigns it to the `REGION` variable. This specifies the AWS region where the CloudFormation stack will be deployed.
+
+- `STACK_NAME=$(cfn-toml key deploy.stack_name -t $CONFIG_PATH)`:
+   - This line extracts the value of the `deploy.stack_name` key from the TOML configuration file and assigns it to the `STACK_NAME` variable. This is the name of the CloudFormation stack that will be created or updated.
+
+- `aws cloudformation deploy ...`:
+   - This line uses the AWS CLI to deploy the CloudFormation template.
+   - `--stack-name $STACK_NAME`: Specifies the name of the CloudFormation stack.
+   - `--s3-bucket $BUCKET`: Specifies the S3 bucket where CloudFormation artifacts will be stored.
+   - `--s3-prefix networking`: Sets an S3 prefix for the artifacts within the bucket.
+   - `--region $REGION`: Specifies the AWS region where the stack will be deployed.
+   - `--template-file "$CFN_PATH"`: Specifies the path to the CloudFormation template file.
+   - `--no-execute-changeset`: Indicates that the script should not actually execute any changeset; it's for previewing the changes.
+   - `--tags group=test-ubuntu-networking`: Assigns a tag to the CloudFormation stack.
+   - `--capabilities CAPABILITY_NAMED_IAM`: Specifies that the stack may create named IAM resources.
+
+Overall, this script deploys a CloudFormation stack based on a template, using configuration settings stored in a TOML file. It performs linting on the template before deploying to catch potential issues early in the process.
+
 ## EC2 Instance (Ubuntu Server)
 
 8. **Create a network interface with an ip in the subnet that was created in step 4**
@@ -490,3 +562,9 @@ This section of the AWS CloudFormation template defines an AWS EC2 instance reso
    - **ServerInstanceID**: Provides the instance ID of the EC2 instance using the `!Ref` function.
 
 These outputs are helpful for obtaining information about the launched EC2 instance, such as its public and private IP addresses and instance ID. This information can be used for further configuration or for accessing the instance after it has been created.
+
+#### Deploy ec2 instance stack
+Make sure you are in the `cloudformation-practice` directory when running the commands below
+```sh
+./bin/cfn/ec2-deploy
+```
