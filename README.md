@@ -429,6 +429,7 @@ Make sure you are in the `cloudformation-practice` directory when running the co
 
 And before deploying change the path `/home/ec2-user/environment/` in the [**scripts**](cloudformation-practice/bin/cfn/) to the correct path depending on your environment.
 ```sh
+chmod u+x bin/cfn/network-deploy
 ./bin/cfn/network-deploy
 ```
 
@@ -603,6 +604,7 @@ These outputs are helpful for obtaining information about the launched EC2 insta
 #### Deploy ec2 instance stack
 Make sure you are in the `cloudformation-practice` directory when running the commands below
 ```sh
+chmod u+x bin/cfn/ec2-deploy
 ./bin/cfn/ec2-deploy
 ```
 
@@ -613,3 +615,80 @@ Make sure you are in the `cloudformation-practice` directory when running the co
 ![Deploy EC2](images/ec2/testubuntu_ec2_instance.png)
 
 ![Deploy EC2](images/ec2/testubuntu_ec2_server_running.png)
+
+
+### Clean resources
+If you are done testing, practicing and everything looks good to you, it's best practice to clean up resources in order to minimize spend.
+
+#### Delete EC2 instance
+Run the command to delete the EC2 CFN stack
+
+```sh
+chmod u+x bin/cfn/ec2-delete  
+./bin/cfn/ec2-delete 
+```
+
+The bash command `chmod u+x bin/cfn/ec2-delete` is used to modify the file permissions of a script or executable file in a Unix-like operating system, such as Linux. Let's break down the command and understand what it does:
+
+1. `chmod`: This is the command for changing file permissions.
+
+2. `u+x`: This is an argument to the `chmod` command, and it specifies the permission change you want to make. Here's what it means:
+   - `u`: This refers to the file's owner, i.e., the user who owns the file.
+   - `+x`: This indicates that you want to add the "execute" permission to the file. The `+` sign means to add the permission, and `x` represents the execute permission.
+
+3. `bin/cfn/ec2-delete`: This is the path to the file for which you want to modify the permissions. In this case, it's specifying a file named `ec2-delete` located in the `bin/cfn` directory.
+
+When you run this command, it will add the execute permission to the specified file for the owner of the file. This means that the owner can now run the script or executable file as a program. Other users or groups may or may not have the execute permission, depending on their respective permissions, but the owner will definitely have it.
+
+This command is often used when you have a script or program that you want to make executable, allowing you to run it from the command line without needing to explicitly specify the interpreter (e.g., `bash script.sh` or `python script.py`). Instead, you can simply run `./ec2-delete` (assuming you are in the same directory) after adding execute permissions to the file.
+
+#### Summary of script
+```sh
+#! /usr/bin/env bash
+set -e # stop the execution of the script if it fails
+
+CONFIG_PATH="/home/ec2-user/environment/aws/cfn/ec2/config.toml"
+
+
+REGION=$(cfn-toml key deploy.region -t $CONFIG_PATH)
+STACK_NAME=$(cfn-toml key deploy.stack_name -t $CONFIG_PATH)
+
+
+aws cloudformation delete-stack \
+    --stack-name $STACK_NAME \
+    --region $REGION
+
+```
+
+This bash script is used to delete an AWS CloudFormation stack using the AWS Command Line Interface (CLI). It follows best practices by setting some error handling and using parameterized configuration. Let's break down the script step by step:
+
+1. `set -e`:
+   - This command sets the `-e` option for the script, which means that the script will immediately exit if any command returns a non-zero exit status, indicating an error. This is a good practice for ensuring that the script stops execution if something goes wrong.
+
+2. `CONFIG_PATH="/home/ec2-user/environment/aws/cfn/ec2/config.toml"`:
+   - This line sets the `CONFIG_PATH` variable to the path of a TOML configuration file that appears to contain settings for the CloudFormation stack deletion.
+
+3. `REGION=$(cfn-toml key deploy.region -t $CONFIG_PATH)`:
+   - This line extracts the value of the `deploy.region` key from the TOML configuration file specified by `$CONFIG_PATH` using the `cfn-toml` command-line tool. It assigns the extracted value to the `REGION` variable. This specifies the AWS region where the CloudFormation stack is located.
+
+4. `STACK_NAME=$(cfn-toml key deploy.stack_name -t $CONFIG_PATH)`:
+   - This line extracts the value of the `deploy.stack_name` key from the TOML configuration file and assigns it to the `STACK_NAME` variable. This is the name of the CloudFormation stack that will be deleted.
+
+5. `aws cloudformation delete-stack ...`:
+   - This line uses the AWS CLI to delete the specified CloudFormation stack.
+   - `--stack-name $STACK_NAME`: Specifies the name of the CloudFormation stack to be deleted.
+   - `--region $REGION`: Specifies the AWS region where the stack is located.
+
+Overall, this script deletes an existing CloudFormation stack based on its name and the AWS region. It retrieves these values from a TOML configuration file, making it easy to parameterize the stack deletion process. If the stack doesn't exist or if there are any errors during deletion, the script will stop execution due to the `-e` option, ensuring that issues are promptly identified.
+
+![EC2 Delete](images/ec2/testubuntu_ec2_delete.png)
+
+#### Delete VPC Network
+Run the command to delete the EC2 CFN stack
+
+```sh
+chmod u+x bin/cfn/network-delete  
+./bin/cfn/network-delete 
+```
+
+![VPC Delete](images/network/testubuntu_vpc_delete.png)

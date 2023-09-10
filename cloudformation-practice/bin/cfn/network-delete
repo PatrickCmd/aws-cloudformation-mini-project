@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+set -e # stop the execution of the script if it fails
+
+CONFIG_PATH="/home/ec2-user/environment/aws/cfn/network/config.toml"
+
+
+REGION=$(cfn-toml key deploy.region -t $CONFIG_PATH)
+STACK_NAME=$(cfn-toml key deploy.stack_name -t $CONFIG_PATH)
+
+
+aws cloudformation delete-stack \
+    --stack-name $STACK_NAME \
+    --region $REGION
