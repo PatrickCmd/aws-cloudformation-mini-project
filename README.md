@@ -617,7 +617,7 @@ chmod u+x bin/cfn/ec2-deploy
 ![Deploy EC2](images/ec2/testubuntu_ec2_server_running.png)
 
 
-### Clean resources
+### Clean up resources
 If you are done testing, practicing and everything looks good to you, it's best practice to clean up resources in order to minimize spend.
 
 #### Delete EC2 instance
