@@ -498,6 +498,16 @@ This bash script is used to deploy an AWS CloudFormation template using the AWS 
 
 Overall, this script deploys a CloudFormation stack based on a template, using configuration settings stored in a TOML file. It performs linting on the template before deploying to catch potential issues early in the process.
 
+![Deploy vpc](images/network/testubuntunet1.png)
+
+![Deploy vpc](images/network/testubuntunet_change_set.png)
+
+![Deploy vpc](images/network/testubuntunet_execute_change_set.png)
+
+![Deploy vpc](images/network/testubuntu_events.png)
+
+![Deploy vpc](images/network/testubuntu_vpc2.png)
+
 ## EC2 Instance (Ubuntu Server)
 
 See full template [**here**](cloudformation-practice/aws/cfn/ec2/template.yaml)
