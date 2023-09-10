@@ -605,3 +605,11 @@ Make sure you are in the `cloudformation-practice` directory when running the co
 ```sh
 ./bin/cfn/ec2-deploy
 ```
+
+![Deploy EC2](images/ec2/testubuntu_ec2.png)
+
+![Deploy EC2](images/ec2/testubuntu_ec2_events.png)
+
+![Deploy EC2](images/ec2/testubuntu_ec2_instance.png)
+
+![Deploy EC2](images/ec2/testubuntu_ec2_server_running.png)
