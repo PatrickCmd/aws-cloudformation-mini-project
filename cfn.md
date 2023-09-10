@@ -1,1 +1,1 @@
-![AWS CFN](images/aws_cfn.png)
+![AWS CFN](images/aws_vpc_cfn.png)
