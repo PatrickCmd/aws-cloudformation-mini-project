@@ -684,7 +684,7 @@ Overall, this script deletes an existing CloudFormation stack based on its name 
 ![EC2 Delete](images/ec2/testubuntu_ec2_delete.png)
 
 #### Delete VPC Network
-Run the command to delete the EC2 CFN stack
+Run the command to delete the VPC CFN stack
 
 ```sh
 chmod u+x bin/cfn/network-delete  
