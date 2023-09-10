@@ -57,7 +57,7 @@ pip install cloudformation-cli cloudformation-cli-java-plugin cloudformation-cli
 For a specific OS follow the instructions [**here**](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html)
 
 ### CFN-Toml
-Toml Configuration for Bash scripts using CloudFormation created by [**Andrew Brown**](https://github.com/omenking) written in Ruby.
+Toml Configuration for Bash scripts using CloudFormation library created by [**Andrew Brown**](https://github.com/omenking) written in Ruby.
 This will allow us to pull in external parameters as variables within our deploy scripts, then pass them during creation from our CFN templates. These values are normally hardcoded into the script/command to deploy the CFN template, but with Andrew's library this won't be necessary.
 
 Go to Andrew's public repo for cfn-toml here: https://github.com/teacherseat/cfn-toml/tree/main and we walk through how to use it. We begin by installing cfn-toml through the CLI:
