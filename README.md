@@ -30,6 +30,22 @@ A mini project to learn about AWS Cloudformation. Launch a VPC and an EC2 instan
 
 - In AWS (Amazon Web Services), a **route table** is a virtual networking component that controls the routing of network traffic within a Virtual Private Cloud (VPC). It acts as a set of rules that determine where network traffic is directed, allowing you to define the paths for inbound and outbound traffic within your VPC.
 
+In the context of AWS CloudFormation, the following terms have specific meanings:
+
+1. **CloudFormation Artifacts**:
+   - **Definition**: CloudFormation artifacts refer to the templates and related files that define the AWS resources, their configurations, and the relationships between them.
+   - **Usage**: These artifacts include the CloudFormation template files (usually in YAML or JSON format) that describe the infrastructure you want to create or update. They may also include parameter files, scripts, and any other resources referenced by the template.
+
+2. **Stack**:
+   - **Definition**: A stack is a fundamental unit of deployment and management in AWS CloudFormation. It represents a set of AWS resources that you can create, update, or delete as a single, cohesive unit.
+   - **Usage**: Stacks are created from CloudFormation templates, and they contain AWS resources like EC2 instances, S3 buckets, IAM roles, and more. Stacks are used to manage the lifecycle of these resources, making it easy to provision and manage entire applications or infrastructure environments. Stacks can also be nested within other stacks to create complex architectures.
+
+3. **Change Sets**:
+   - **Definition**: A change set is a summary of the proposed changes to a CloudFormation stack. It allows you to preview and understand the impact of changes to your resources before actually making those changes.
+   - **Usage**: When you want to update a stack (e.g., add new resources, modify existing ones, or delete resources), you create a change set. CloudFormation will analyze the changes and provide a detailed preview of what will be created, modified, or deleted. Change sets help ensure that updates are applied correctly and minimize potential risks, especially in production environments. They also allow you to review and approve changes before execution.
+
+In summary, CloudFormation artifacts are the templates and related files that define your infrastructure, a stack is a collection of AWS resources managed as a unit, and change sets are used to preview and understand the impact of changes to a stack before applying those changes. Together, these concepts are key to managing and automating infrastructure deployments and updates on AWS.
+
 ## Text Editors
 1. [**VSCode**](https://code.visualstudio.com/)
 2. [**AWS Cloud9**](https://aws.amazon.com/pm/cloud9/?trk=dcd0f000-1e1c-4a73-9f3a-f86bb6d7d1ee&sc_channel=ps&ef_id=CjwKCAjwjOunBhB4EiwA94JWsOXx1UYRpVKNvwB1IVv29PLwBmtEM-nCiLUVYT_26uAJjctYUjQ_FRoCNCQQAvD_BwE:G:s&s_kwcid=AL!4422!3!651612761006!e!!g!!aws%20cloud9!19828231353!150095226914)
